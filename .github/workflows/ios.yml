@@ -23,9 +23,20 @@ jobs:
       - name: Build Web App
         run: npm run build
 
-      - name: Initialize Capacitor iOS
+      - name: Initialize Capacitor Configuration
         run: |
-          npx cap add ios || true
+          cat << 'EOF' > capacitor.config.json
+          {
+            "appId": "hu.neptun.orarend",
+            "appName": "Neptun Orarend",
+            "webDir": "dist",
+            "bundledWebRuntime": false
+          }
+          EOF
+
+      - name: Setup iOS Platform
+        run: |
+          npx cap add ios
           npx cap sync ios
 
       - name: Build Xcode Archive
