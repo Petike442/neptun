@@ -13,12 +13,12 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Install Dependencies
         run: |
           npm install --legacy-peer-deps
-          npm install -D @capacitor/cli@latest @capacitor/core@latest @capacitor/ios@latest --legacy-peer-deps
+          npm install -D @capacitor/cli@^6.0.0 @capacitor/core@^6.0.0 @capacitor/ios@^6.0.0 --legacy-peer-deps
 
       - name: Build Web App
         run: npm run build
@@ -35,9 +35,7 @@ jobs:
 
       - name: Setup iOS Platform
         run: |
-          npx cap add ios || true
-          # Minimum iOS deployment target beállítása iOS 14.0-ra CocoaPods-hoz
-          sed -i '' "s/platform :ios, '.*'/platform :ios, '14.0'/g" ios/App/Podfile
+          npx cap add ios
           npx cap sync ios
 
       - name: Build Xcode Archive
