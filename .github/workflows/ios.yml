@@ -17,8 +17,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          npm install
-          npm install -D @capacitor/cli @capacitor/core @capacitor/ios
+          npm install --legacy-peer-deps
+          npm install -D @capacitor/cli @capacitor/core @capacitor/ios --legacy-peer-deps
 
       - name: Build Web App
         run: npm run build
