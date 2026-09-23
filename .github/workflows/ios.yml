@@ -18,7 +18,7 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install --legacy-peer-deps
-          npm install -D @capacitor/cli @capacitor/core @capacitor/ios --legacy-peer-deps
+          npm install -D @capacitor/cli@latest @capacitor/core@latest @capacitor/ios@latest --legacy-peer-deps
 
       - name: Build Web App
         run: npm run build
@@ -29,14 +29,15 @@ jobs:
           {
             "appId": "hu.neptun.orarend",
             "appName": "Neptun Orarend",
-            "webDir": "dist",
-            "bundledWebRuntime": false
+            "webDir": "dist"
           }
           EOF
 
       - name: Setup iOS Platform
         run: |
-          npx cap add ios
+          npx cap add ios || true
+          # Minimum iOS deployment target beállítása iOS 14.0-ra CocoaPods-hoz
+          sed -i '' "s/platform :ios, '.*'/platform :ios, '14.0'/g" ios/App/Podfile
           npx cap sync ios
 
       - name: Build Xcode Archive
